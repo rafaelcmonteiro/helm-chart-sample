@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-app-stg
+spec:
+  destination:
+    namespace: staging
+    server: 'https://kubernetes.default.svc'
+  project: default
+  sources:
+    - repoURL: 'https://github.com/rafaelcmonteiro/helm-chart-sample'
+      path: app-python
+      targetRevision: HEAD
+    - repoURL: 'https://github.com/rafaelcmonteiro/helm-chart-sample'
+      path: values/stg
+      targetRevision: HEAD
+      helm:
+        valueFiles:
+          - values.yaml
